@@ -1,6 +1,7 @@
 package com.example.jwtexampleproject.service.auth;
 
 
+import com.example.jwtexampleproject.dao.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,8 +35,9 @@ public class JwtService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
-        System.out.println(new Date(System.currentTimeMillis()));
-        System.out.println(new Date(System.currentTimeMillis() + 1000 * 60 *60* 24));
+        UserEntity userEntity = (UserEntity) userDetails;
+        extraClaims.put("userId", userEntity.getId());
+        extraClaims.put("role", userEntity.getAuthorities().iterator().next().getAuthority());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

@@ -46,10 +46,7 @@ public class AuthService {
                 )
         );
         UserEntity user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
-        UserDetails userDetails = new User(user.getUsername(), user.getPassword(), user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
-                .collect(Collectors.toList()));
-        var jwtToken = jwtService.generateToken(userDetails);
+        var jwtToken = jwtService.generateToken(user);
         return LoginResponse.builder()
                 .token(jwtToken)
                 .build();
