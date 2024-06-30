@@ -36,8 +36,8 @@ public class JwtService {
             UserDetails userDetails
     ) {
         UserEntity userEntity = (UserEntity) userDetails;
-        extraClaims.put("userId", userEntity.getId());
-        extraClaims.put("role", userEntity.getAuthorities().iterator().next().getAuthority());
+//        extraClaims.put("userId", userEntity.getId());
+//        extraClaims.put("role", userEntity.getAuthorities().iterator().next().getAuthority());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -73,5 +73,9 @@ public class JwtService {
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+    public static class CheckRole{
+
+
     }
 }

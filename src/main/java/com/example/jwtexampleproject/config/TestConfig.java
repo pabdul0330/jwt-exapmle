@@ -38,31 +38,15 @@ public class TestConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("login").permitAll()
                                 .requestMatchers(permitSwagger).permitAll()
+                                .requestMatchers("/home/admin").hasRole("ADMIN")
+                                .requestMatchers("/home/user").hasRole("USER")
                                 .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-    @Bean
-    public UserDetailsService userDetailsServicess() {
-        User.UserBuilder users = User.withDefaultPasswordEncoder();
 
-        UserDetails user = users
-                .username("user")
-                .password("password")
-                .roles("USER")
-                .authorities("READ")
-                .build();
-
-        UserDetails admin = users
-                .username("admin")
-                .password("password")
-                .roles("ADMIN")
-                .authorities("READ", "CREATE", "DELETE")
-                .build();
-        return new InMemoryUserDetailsManager(user,admin);
-    }
     public static String[] permitSwagger = {
             "/api/v1/auth/**",
             "v3/api-docs/**",

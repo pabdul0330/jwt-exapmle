@@ -26,18 +26,6 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-//    public void register(UserRegisterRequestDto requestDto) {
-//        var user = UserRegisterRequestDto.builder()
-//                .firstName(requestDto.getFirstName())
-//                .lastName(requestDto.getLastName())
-//                .email(requestDto.getEmail())
-//                .password(passwordEncoder.encode(requestDto.getPassword()))
-//                .roles(requestDto.getRoles())
-//                .build();
-//
-//        userRepository.save(usermapper.mapRegisterRequestDtoToEntity(user));
-//    }
-
     public LoginResponse authenticate(LoginRequest loginRequest) {
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
